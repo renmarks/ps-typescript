@@ -39,11 +39,15 @@ async function handleInput(e: any) {
   const amountStr = fromAmount?.value;
 
   const amount = parseFloat(amountStr || "0" )
+    if (amount == '') {
+    toAmount.textContent = '0';
+    error.textContent = 'You should enter an amount to convert';
+   } else {
   const result = await Util.convertCurrency(from || "", to || "", amount)
   const value = result.getValue();
   toAmount.textContent = value.toString();
   error.textContent = result.getError();
-
+   }
 }
 
 populateOptions();
