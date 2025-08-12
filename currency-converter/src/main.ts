@@ -30,7 +30,8 @@ function populateOptions() {
 }
 
 function formatCurrency(amount: number, currency: string) {
-
+  return new Intl.NumberFormat(userLocale,
+    { style: 'currency', currency: currency }).format(amount);
 }
 
 async function handleInput(e: any) {
@@ -45,7 +46,7 @@ async function handleInput(e: any) {
    } else {
   const result = await Util.convertCurrency(from || "", to || "", amount)
   const value = result.getValue();
-  toAmount.textContent = value.toString();
+  toAmount.textContent = formatCurrency(value, to);
   error.textContent = result.getError();
    }
 }
