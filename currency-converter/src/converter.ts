@@ -6,7 +6,7 @@ let currenciesJson = {
 };
 
 // Define the Currency class here
-export class Currency {
+class Currency {
   private code: string;
   private name: string;
 
@@ -15,21 +15,18 @@ export class Currency {
     this.name = name;
   }
 
-  public getCode(): string {
+  public getCode() {
     return this.code;
   }
 
-  public getName(): string {
+  public getName() {
     return this.name;
-  }
-    public getText(): string {
-    return `${this.code} - ${this.name}`;
   }
 }
 
-
 // Define the Result class here
-export class Result {
+
+class Result {
   private value: number = 0;
   private error: string = "";
 
@@ -40,53 +37,49 @@ export class Result {
       this.error = a!;
     }
   }
-  public getValue(): number {
+
+  public getValue() {
     return this.value;
   }
 
-  public getError(): string {
+  public getError() {
     return this.error;
   }
-} 
+}
 
 export class Util {
   private static currencies: Currency[] = [];
   private static result: Result;
 
   static loadCurrencies(): Currency[] {
-    Util.currencies = [];
-
-    for (const [code, name] of Object.entries(currenciesJson)) {
-      Util.currencies.push(new Currency(code, name));
+    for (let obj of Object.entries(currenciesJson)) {
+      Util.currencies.push(new Currency(obj[0], obj[1]));
     }
-
     return Util.currencies;
   }
 
- static async convertCurrency(from: string, to: string, amount: number): Promise<Result> {
+  static async convertCurrency(from: string, to: string, amount: number): Promise<Result> {
     const result = await fetchForexRates(from);
-    
     if (result instanceof Error) {
-        return new Result(result.message + ': could not retrieve exchange rate data.');
+      return new Result(result.message + ": could not retrieve exchange rate data.");
+    } else {
+      const rate = result[0].rates[to];
+      const convertedAmount =  amount * rate;
+
+      Util.result = new Result(convertedAmount);
+      return Util.result;
     }
-
-    const rate = result[0].rates[to];
-    const convert = amount * rate;
-    Util.result = new Result(convert);
-    return Util.result;
-}
+  }
 }
 
-export async function fetchForexRates(base: string) {
-  try { 
+async function fetchForexRates(base: string) {
+  try {
     const response = await fetch(`/api/forexrate/${base}`);
-
     if (!response.ok) {
       throw new Error(`Error response with status: ${response.status}`);
     }
-
     const ratesByBase = await response.json();
-    return [ratesByBase];
+    return ratesByBase;
   } catch (error) {
     return error;
   }
