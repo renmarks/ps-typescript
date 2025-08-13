@@ -1,0 +1,23 @@
+{
+  "name": "geometry-util",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "ts-node app.ts",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.3",
+    "ts-node": "^10.9.1"
+  }
+}
