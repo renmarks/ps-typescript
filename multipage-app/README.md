@@ -1,6 +1,6 @@
 # Multipage Personal Finance Tracker
 
-A ReactJS and TypeScript project that allows you to track personal finances across multiple pages in the browser.
+A ReactJS and TypeScript project that allows you to track personal finances across multiple pages in the browser. Based on Pluralsight's Multipage React App project.
 
 ## Installation
 
