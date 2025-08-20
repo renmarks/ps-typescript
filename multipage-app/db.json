@@ -1,7 +1,0 @@
-{
-  "currencies": [
-    { "id": "usd", "conversion": 1.0 },
-    { "id": "cad", "conversion": 0.73 },
-    { "id": "nzd", "conversion": 0.61 }
-  ]
-}
